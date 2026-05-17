@@ -15,7 +15,7 @@ class AlinhaTriangulos(MovingCameraScene):
         # calcula H (pé da altura)
         BC_vec = C - B
         t = np.dot(A - B, BC_vec) / np.dot(BC_vec, BC_vec)
-        H = B + t * BC_vec  # aqui H = (0,0,0)
+        H = B + t * BC_vec  # aqui H = (0,0,0)*
 
         AB = Line(A, B)
         AC = Line(A, C)
