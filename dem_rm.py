@@ -163,9 +163,9 @@ class AlinhaTriangulos(MovingCameraScene):
         self.play(Create(guardar_tri_CAH), Create(guardar_tri_BAH))
 
         # parâmetros numéricos (2D)
-        BA = (A - B)[:2]
-        BH = (H - B)[:2]
-        AC = (C - A)[:2]
+        BA = (A - B)
+        BH = (H - B)
+        AC = (C - A)
         theta = -math.atan2(BA[1], BA[0])         # cerca de -0.98279 rad (-56.3099°)
         theta2 = -math.atan2(AC[1], AC[0])
 
@@ -175,7 +175,7 @@ class AlinhaTriangulos(MovingCameraScene):
         # 2) aplicar reflexão no eixo x (matriz 3x3 para Manim)
         S = np.array([[1., 0., 0.],
                       [0., -1., 0.],
-                      [0., 0., 1.]])
+                      [0., 0., 1]])
         # apply_matrix aplica a transformação diretamente às coordenadas
         self.play(guardar_tri_BAH.animate.apply_matrix(S, about_point=B), guardar_tri_CAH.animate.apply_matrix(S, about_point=C), run_time=2)
         self.play(guardar_tri_CAH.animate.move_to(2*DOWN+2*RIGHT))
@@ -206,9 +206,18 @@ class AlinhaTriangulos(MovingCameraScene):
         self.play(FadeOut(linha_altura), FadeOut(label_m), FadeOut(label_n), FadeOut(pontoH), FadeOut(label_H))
         self.wait()
 
+        # semelhanca_label = MathTex(r"\triangle ACB \sim \triangle HAB \sim \triangle HCA").scale(0.7).shift(4*RIGHT+ 4*UP)   
+
+        # self.play(FadeIn(semelhanca_label))
 
         self.play(Transform(label_H2, label_H2_certo), Transform(label_H3, label_H3_certo), Transform(label_m2, label_m2_certo), Transform(label_A2, label_A2_certo), Transform(label_A3, label_A3_certo), Transform(label_n2, label_n2_certo), Transform(label_b2, label_b2_certo), Transform(label_c2, label_c2_certo), Transform(label_B2, label_B2_certo), Transform(label_C2, label_C2_certo))
         self.add(label_c2_copia, label_b2_copia, label_m2_copia, label_n2_copia)
+
+        semelhanca_label1 = MathTex(r'\triangle ACB', color = BLUE).shift(4*UP + 1.8*RIGHT)
+        semelhanca_label12 = MathTex(r'\sim').shift(4*UP + 2.8*RIGHT)
+        semelhanca_label13 = MathTex(r'\triangle HAB', color = GREEN).shift(4*UP + 3.8*RIGHT)
+
+        self.play(FadeIn(semelhanca_label1, semelhanca_label12, semelhanca_label13))
 
         relacao_1 = MathTex(
             r"\frac{\phantom{a}}{\phantom{b}} = \frac{\phantom{c}}{\phantom{d}}"
@@ -230,6 +239,8 @@ class AlinhaTriangulos(MovingCameraScene):
 
         self.play(label_c2.animate.shift(5.8*UP + 9.5*RIGHT), label_m2.animate.shift(10.8*RIGHT + 3.3*UP))
 
+        
+
         base = Line(LEFT * 0.5, RIGHT * 0.5).shift(1.5*RIGHT + 2*UP)
         base2 = Line(LEFT * 0.5, RIGHT * 0.5).shift(1.5*RIGHT + 2*UP)
         base.rotate(45*DEGREES)
@@ -242,6 +253,7 @@ class AlinhaTriangulos(MovingCameraScene):
 
         grupo1 = VGroup()
         grupo1.add(relacao_1, label_a, label_c2, label_c, label_m2)
+
 
         relacao_1_1_2 = MathTex(r"c \cdot c = a \cdot m").shift((2.0*RIGHT)+(2.0*UP)).scale(1.5)
 
@@ -258,6 +270,13 @@ class AlinhaTriangulos(MovingCameraScene):
 
         self.wait()
 
+        self.play(FadeOut(semelhanca_label13))
+
+        semelhanca_label2 = MathTex(r'\triangle HCA', color = RED).shift(4*UP + 3.8*RIGHT)
+
+        self.play(FadeIn(semelhanca_label2))
+
+
         self.play(label_a2.animate.set_color(BLUE), label_b.animate.set_color(BLUE))
 
         self.play(FadeIn(relacao_2), label_a2.animate.scale(2), label_b.animate.scale(2))
@@ -270,6 +289,7 @@ class AlinhaTriangulos(MovingCameraScene):
 
         self.play(label_b2.animate.shift(5.8*UP + 5*RIGHT), label_n2.animate.shift(3.6*RIGHT + 2.8*UP))
 
+        
         base11 = Line(LEFT * 0.5, RIGHT * 0.5).shift(2.5*RIGHT + 2*UP)
         base22 = Line(LEFT * 0.5, RIGHT * 0.5).shift(2.5*RIGHT + 2*UP)
         base11.rotate(45*DEGREES)
@@ -277,6 +297,7 @@ class AlinhaTriangulos(MovingCameraScene):
         linha_pontilhada11 = DashedVMobject(base11, num_dashes=10).set_color(YELLOW)
         linha_pontilhada22 = DashedVMobject(base22, num_dashes=10).set_color(YELLOW)
         self.play(Write(linha_pontilhada11), Write(linha_pontilhada22))
+
 
         self.wait()
 
@@ -307,6 +328,9 @@ class AlinhaTriangulos(MovingCameraScene):
 
         relacoes = VGroup()
         relacoes.add(grupo1, grupo2)
+
+        self.play(FadeOut(semelhanca_label1, semelhanca_label12, semelhanca_label2))
+
 
         resultado = MathTex(r"b^2 + c^2 = a \cdot m + a \cdot n").shift(2*UP+2.9*RIGHT).scale(1.5)
 
@@ -341,6 +365,8 @@ class AlinhaTriangulos(MovingCameraScene):
         teorema = Text('Teorema de Pitágoras').shift(3*UP + 1.5*RIGHT)
 
         self.play(FadeIn(teorema))
+
+        # TERMINA AQUIIIIIIIIIIIIII
 
 
         # copia1 = grupo1.copy()
